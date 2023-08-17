@@ -1,4 +1,5 @@
 #---------------------------------------------------------------------------------------------------------------
+#---------------------------------------------------------------------------------------------------------------
 #This is the main file for the project. It will be used to run the program
 #It will also be used to call the other files and functions
 # Author: Andres Zelaya / Opsord
@@ -23,3 +24,19 @@
 #The program will create a defa8lt confing and download-list file if they are not found
 #The program will be able to read the text file and use the information to download the videos
 #---------------------------------------------------------------------------------------------------------------
+#---------------------------------------------------------------------------------------------------------------
+#Importing the functions from the functions file
+from functions import check_config, read_config, check_download_list, read_download_list
+#---------------------------------------------------------------------------------------------------------------
+#---------------------------------------------------------------------------------------------------------------
+#Here is where the program starts
+
+#Checking if the config file exists and creating one with default values if it doesn't
+check_config()
+#Reading the config file
+config = read_config()
+#Checking if the download-list file exists and creating one with default values if it doesn't
+check_download_list()
+#Reading the download-list file
+download_list = read_download_list()
+
