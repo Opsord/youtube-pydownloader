@@ -1,0 +1,6 @@
+{
+    "final-format": "mp3",
+    "download-list": "download-list.txt",
+    "cache-folder": "cache",
+    "destination-folder": "downloads"
+}

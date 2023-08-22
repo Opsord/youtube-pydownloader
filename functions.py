@@ -77,7 +77,7 @@ def check_download_list():
             for link in default_download_list:
                 download_list_file.write(link + "\n")
 
-#Defining the function that will read the download-list file
+#Defining the function that will read the download-list file and return a list with the links
 def read_download_list():
     #Opening the download-list file
     with open("download-list.txt", "r") as download_list_file:
@@ -85,6 +85,25 @@ def read_download_list():
         download_list = download_list_file.readlines()
     #Returning the download-list
     return download_list
+
+#Defining the function that will download one video
+def download_video(link, cache_folder):
+    #Downloading the video
+    video = YouTube(link).streams.first().download(cache_folder)
+    #Returning the video
+    return video
+
+#Defining the function that will convert one video
+def convert_video(video, final_format, destination_folder):
+    #Converting the video
+    ffmpeg.input(video).output(destination_folder + "/" + video.split("/")[-1].split(".")[0] + "." + final_format).run()
+    #Returning the video
+    return video
+
+#Defining the function that will delete one video
+def delete_video(video):
+    #Deleting the video
+    os.remove(video)
 #---------------------------------------------------------------------------------------------------------------
 #---------------------------------------------------------------------------------------------------------------
 

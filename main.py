@@ -25,11 +25,24 @@
 #The program will be able to read the text file and use the information to download the videos
 #---------------------------------------------------------------------------------------------------------------
 #---------------------------------------------------------------------------------------------------------------
+#Importing libraries for downloading the videos
+from pytube import YouTube
+#Importing libraries for converting the videos
+import ffmpeg
+#Importing libraries for accessing the config file
+import json
+#Importing libraries for accessing the download-list file
+import os
+#---------------------------------------------------------------------------------------------------------------
+#---------------------------------------------------------------------------------------------------------------
 #Importing the functions from the functions file
 from functions import check_config, read_config, check_download_list, read_download_list
 #---------------------------------------------------------------------------------------------------------------
 #---------------------------------------------------------------------------------------------------------------
 #Here is where the program starts
+
+
+#Getting the config values
 
 #Checking if the config file exists and creating one with default values if it doesn't
 check_config()
@@ -40,3 +53,47 @@ check_download_list()
 #Reading the download-list file
 download_list = read_download_list()
 
+#Download the first video on the list
+video = YouTube(download_list[0])
+#Getting the title of the video
+video_title = video.title
+#Getting the video stream (lowest resolution since the final formar is mp3)
+video_stream = video.streams.get_lowest_resolution()
+#Downloading the video to the cache folder
+video_stream.download(config["cache-folder"])
+#Converting the video to mp3
+
+
+# #Downloading and converting the videos
+# for videoLink in download_list:
+#     #Downloading the video
+#     video = YouTube(videoLink)
+#     #Getting the title of the video
+#     videoTitle = video.title
+#     #Getting the video stream (lowest resolution since the final formar is mp3)
+#     videoStream = video.streams.get_lowest_resolution()
+#     #Downloading the video
+#     videoStream.download()
+#     #Converting the video to mp3
+#     ffmpeg.input(videoTitle).output(videoTitle + ".mp3").run()
+#     #Deleting the video from the cache folder
+#     os.remove(videoTitle)
+#     #Moving the video to the destination folder
+#     os.rename(videoTitle + ".mp3", config["destination-folder"] + "/" + videoTitle + ".mp3")
+
+
+
+#Displaying config values to the user
+print("The config values are:")
+print(config)
+
+
+#Displaying a message to the user when the program is done
+print("The program has finished downloading and converting the videos")
+
+#Deleting the contents of the cache folder
+for file in os.listdir(config["cache-folder"]):
+    os.remove(config["cache-folder"] + "/" + file)
+
+#Displaying a message to the user when the program is done
+print("The program has finished deleting the videos from the cache folder")
